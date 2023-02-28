@@ -1,14 +1,10 @@
 import { ThingsFileRepo } from './things.file.repo';
 import fs from 'fs/promises';
-import { knowledge } from '../entities/things.models';
-//Mockeo el file system
+
 jest.mock('fs/promises');
 
 describe('Given', () => {
-  //ARRANGE
   const repo = new ThingsFileRepo();
-
-  //ACT
 
   test('Then it could be instantiated', () => {
     expect(repo).toBeInstanceOf(ThingsFileRepo);
@@ -16,7 +12,6 @@ describe('Given', () => {
 
   describe('When I use query', () => {
     test('It should return data', async () => {
-      //ASSERT
       (fs.readFile as jest.Mock).mockResolvedValue('[]');
       const result = await repo.query();
 
@@ -38,7 +33,7 @@ describe('Given', () => {
       (fs.readFile as jest.Mock).mockResolvedValue('[{ "id": "2" }]');
       const id = 1;
       // CUando testeamos un error delante del toThrow poner rejects para que avise que es asincrono.
-      expect(async () => await repo.queryId(id)).rejects.toThrow();
+      expect(async () => repo.queryId(id)).rejects.toThrow();
       expect(fs.readFile).toHaveBeenCalled();
     });
   });

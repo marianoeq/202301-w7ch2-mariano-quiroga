@@ -17,6 +17,7 @@ export class ThingsFileRepo implements Repo<knowledge> {
     if (!result) {
       throw new Error('ID no found');
     }
+
     return result;
   }
 
@@ -29,6 +30,7 @@ export class ThingsFileRepo implements Repo<knowledge> {
     await fs.writeFile(file, dataAdded, 'utf-8');
     return newThing as knowledge;
   }
+
   async update(newThing: Partial<knowledge>): Promise<knowledge> {
     if (!newThing.id) throw new Error('Not valid data');
     const data: string = await fs.readFile(file, 'utf-8');
@@ -41,12 +43,14 @@ export class ThingsFileRepo implements Repo<knowledge> {
         updatedThing = { ...item, ...newThing };
         return updatedThing;
       }
+
       return item;
     });
     if (!updatedThing.id) throw new Error('Id not found');
     await fs.writeFile(file, JSON.stringify(updatedData), 'utf-8');
     return updatedThing as knowledge;
   }
+
   async delete(id: number) {
     const data = await fs.readFile(file, 'utf-8');
     const dataParsed = JSON.parse(data);

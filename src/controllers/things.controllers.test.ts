@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { ThingsFileRepo } from '../repository/things.file.repo';
 import { ThingsControllers } from './things.controllers';
 
