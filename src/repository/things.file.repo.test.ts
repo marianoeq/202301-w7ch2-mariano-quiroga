@@ -1,6 +1,6 @@
 import { ThingsFileRepo } from './things.file.repo';
 import fs from 'fs/promises';
-import { knowledge } from '../entities/things.models';
+
 //Mockeo el file system
 jest.mock('fs/promises');
 

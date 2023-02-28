@@ -1,10 +1,9 @@
 import { Router } from 'express';
 import { ThingsControllers } from '../controllers/things.controllers.js';
-// import { ThingsFileRepo } from '../repository/things.file.repo.js';
-import { mongoRepo } from '../repository/things.mongo.repo.js';
+import { ThingsFileRepo } from '../repository/things.file.repo.js';
 
-//const repo = new ThingsFileRepo();
-const repo = new mongoRepo();
+const repo = new ThingsFileRepo();
+
 const controllers = new ThingsControllers(repo);
 
 export const thingsRouter = Router();
