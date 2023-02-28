@@ -34,8 +34,21 @@ app.patch('/');
 app.patch('/:id');
 app.delete('/:id');
 
-app.use((error: Error, _req: Request, res: Response) => {
-  console.log('soy el middleware de errores');
-
-  res.json([]);
-});
+app.use(
+  (error: HTTPError, _req: Request, res: Response, _next: NextFunction) => {
+    console.log('soy el middleware de errores');
+    const status = error.statusCode || 500;
+    const statusMessage = error.statusMessage || 'Internal server error';
+    res.json([
+      {
+        error: [
+          {
+            status,
+            statusMessage,
+          },
+        ],
+      },
+    ]);
+    console.log(status, statusMessage, error.message);
+  }
+);
