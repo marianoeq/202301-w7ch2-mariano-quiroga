@@ -1,4 +1,4 @@
-import { ThingsFileRepo } from './things.file.repo';
+import { ThingsFileRepo } from './things.file.repo.js';
 import fs from 'fs/promises';
 
 jest.mock('fs/promises');
