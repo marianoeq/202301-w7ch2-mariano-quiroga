@@ -1,7 +1,7 @@
-import { knowledge } from '../entities/things.models';
-import { HTTPError } from '../errors/errors';
+import { knowledge } from '../entities/things.models.js';
+import { HTTPError } from '../errors/errors.js';
 import { Repo } from './repo.interface';
-import { ThingModel } from './things.mongo.model';
+import { ThingModel } from './things.mongo.model.js';
 
 export class ThingsMongoRepo implements Repo<knowledge> {
   async query(): Promise<knowledge[]> {
@@ -29,7 +29,13 @@ export class ThingsMongoRepo implements Repo<knowledge> {
     return data;
   }
 
-  async delete(id: number): Promise<void> {
-    ThingModel.findByIdAndDelete(id);
+  async delete(id: string): Promise<void> {
+    const data = await ThingModel.findByIdAndDelete(id);
+    if (!data)
+      throw new HTTPError(
+        404,
+        'Not found',
+        'Delete not possible: ID not found '
+      );
   }
 }

@@ -19,7 +19,7 @@ export class ThingsControllers {
 
   async getThingById(req: Request, res: Response) {
     console.log('getThingById');
-    const data = await this.repo.queryId(Number(req.params.id));
+    const data = await this.repo.queryId(req.params.id);
     res.json({ results: [data] });
   }
 
@@ -41,9 +41,13 @@ export class ThingsControllers {
     }
   }
 
-  async deleteThing(req: Request, res: Response) {
+  async deleteThing(req: Request, res: Response, next: NextFunction) {
     console.log('delete');
-    await this.repo.delete(Number(req.params.id));
-    res.json({ results: [] });
+    try {
+      await this.repo.delete(req.params.id);
+      res.json({ results: [] });
+    } catch (error) {
+      next(error);
+    }
   }
 }

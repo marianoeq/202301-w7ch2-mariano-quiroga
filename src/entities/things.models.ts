@@ -1,5 +1,5 @@
 export type knowledge = {
-  id: number;
+  id: string;
   name: string;
   side: string;
   difficulty: number;

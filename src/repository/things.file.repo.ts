@@ -9,7 +9,7 @@ export class ThingsFileRepo implements Repo<knowledge> {
     return JSON.parse(data) as knowledge[];
   }
 
-  async queryId(id: number): Promise<knowledge> {
+  async queryId(id: string): Promise<knowledge> {
     const data = await fs.readFile(file, 'utf-8');
 
     const dataParsed: knowledge[] = JSON.parse(data);
@@ -25,7 +25,7 @@ export class ThingsFileRepo implements Repo<knowledge> {
     const data = await fs.readFile(file, 'utf-8');
     const dataParsed: knowledge[] = JSON.parse(data);
     const id = dataParsed.length;
-    newThing.id = id + 1;
+    newThing.id = id + '1';
     const dataAdded = JSON.stringify([...dataParsed, newThing]);
     await fs.writeFile(file, dataAdded, 'utf-8');
     return newThing as knowledge;
@@ -51,7 +51,7 @@ export class ThingsFileRepo implements Repo<knowledge> {
     return updatedThing as knowledge;
   }
 
-  async delete(id: number) {
+  async delete(id: string) {
     const data = await fs.readFile(file, 'utf-8');
     const dataParsed = JSON.parse(data);
     const dataFiltered = dataParsed.filter((item: knowledge) => item.id !== id);
