@@ -1,14 +1,15 @@
 import { Request, Response } from 'express';
-import { ThingsFileRepo } from '../repository/things.file.repo';
+import { ThingsMongoRepo } from '../repository/things.mongo.repo';
 import { ThingsControllers } from './things.controllers';
 
 describe('Given ThingsControllers', () => {
-  const repo: ThingsFileRepo = {
+  const repo: ThingsMongoRepo = {
     create: jest.fn(),
     query: jest.fn(),
     queryId: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
+    search: jest.fn(),
   };
 
   const req = { body: {}, params: { id: '' } } as unknown as Request;

@@ -4,6 +4,7 @@ import cors from 'cors';
 import { HTTPError } from './errors/errors.js';
 import { thingsRouter } from './router/things.router.js';
 import createDebug from 'debug';
+import { usersRouter } from './router/users.router.js';
 
 const debug = createDebug('W7CH2: app');
 export const app = express();
@@ -22,6 +23,7 @@ app.use((_req, _res, next) => {
   next();
 });
 app.use('/things', thingsRouter);
+app.use('/users', usersRouter);
 
 app.get('/', (req, res) => {
   res.json({ things: '/things' });

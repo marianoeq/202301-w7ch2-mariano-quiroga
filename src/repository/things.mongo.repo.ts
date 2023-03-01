@@ -11,7 +11,7 @@ export class ThingsMongoRepo implements Repo<knowledge> {
     return data;
   }
 
-  async queryId(id: Partial<knowledge['id']>): Promise<knowledge> {
+  async queryId(id: knowledge['id']): Promise<knowledge> {
     const data = await ThingModel.findById(id);
     if (!data) throw new HTTPError(404, 'Not found', 'id not found');
     return data;
@@ -37,5 +37,9 @@ export class ThingsMongoRepo implements Repo<knowledge> {
         'Not found',
         'Delete not possible: ID not found '
       );
+  }
+
+  async search(): Promise<knowledge[]> {
+    return [];
   }
 }
