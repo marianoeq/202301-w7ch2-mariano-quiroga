@@ -1,8 +1,12 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
+import { HTTPError } from './errors/errors.js';
 import { thingsRouter } from './router/things.router.js';
+import createDebug from 'debug';
+import { usersRouter } from './router/users.router.js';
 
+const debug = createDebug('W7CH2: app');
 export const app = express();
 
 app.disable('x-powered-by');
@@ -19,24 +23,11 @@ app.use((_req, _res, next) => {
   next();
 });
 app.use('/things', thingsRouter);
-
-app.get('/', (req, res) => {
-  res.json({ things: '/things' });
-});
-app.get('/:id', (req, res) => {
-  res.send('id' + req.params.id);
-});
-app.post('/', (req, res) => {
-  console.log(req.body);
-  res.send(req.body);
-});
-app.patch('/');
-app.patch('/:id');
-app.delete('/:id');
+app.use('/users', usersRouter);
 
 app.use(
   (error: HTTPError, _req: Request, res: Response, _next: NextFunction) => {
-    console.log('soy el middleware de errores');
+    debug('soy el middleware de errores');
     const status = error.statusCode || 500;
     const statusMessage = error.statusMessage || 'Internal server error';
     res.json([
@@ -49,6 +40,6 @@ app.use(
         ],
       },
     ]);
-    console.log(status, statusMessage, error.message);
+    debug(status, statusMessage, error.message);
   }
 );
