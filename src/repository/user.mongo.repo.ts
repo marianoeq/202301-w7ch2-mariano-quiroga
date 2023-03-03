@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { User } from '../entities/user.model.js';
 import { HTTPError } from '../errors/errors.js';
-import { Repo } from './repo.interface';
+import { Repo } from './repo.interface.js';
 import { UserModel } from './user.mongo.model.js';
 
 export class UserMongoRepo implements Repo<User> {

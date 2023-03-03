@@ -17,6 +17,7 @@ export class UserControllers {
       if (!req.body.email || !req.body.password)
         throw new HTTPError(400, 'Unauthorized', 'Email invalid');
       req.body.password = await Auth.createHash(req.body.password);
+      req.body.Knowledge = [];
       const data = await this.repo.create(req.body);
 
       console.log('register: ', data);
@@ -46,6 +47,7 @@ export class UserControllers {
         throw new HTTPError(401, 'Unauthorized', 'Password not match');
 
       const payload: PayloadToken = {
+        id: data[0].id,
         email: data[0].email,
         role: 'Admin',
       };

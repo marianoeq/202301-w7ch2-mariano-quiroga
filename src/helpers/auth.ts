@@ -2,10 +2,12 @@
 import JWT from 'jsonwebtoken';
 import { config } from '../config.js';
 import bcrypt from 'bcryptjs';
-export type PayloadToken = {
+import { HTTPError } from '../errors/errors.js';
+export interface PayloadToken extends JWT.JwtPayload {
+  id: string;
   email: string;
   role: string;
-};
+}
 
 const salt = 10;
 
@@ -15,10 +17,12 @@ export class Auth {
     return JWT.sign(payload, config.jwtSecret as string);
   }
 
-  static verifyJWT(token: string) {
+  static verifyJWT(token: string): PayloadToken {
     const result = JWT.verify(token, config.jwtSecret as string);
-    if (typeof result === 'string') throw new Error('Invalid Payload');
-    return result;
+    // Hacemos comprobacion de string para tirar error porque el caso positivo es un payload.
+    if (typeof result === 'string')
+      throw new HTTPError(498, 'Invalid Payload', result);
+    return result as PayloadToken;
   }
 
   static createHash(value: string) {

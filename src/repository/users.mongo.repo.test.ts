@@ -1,6 +1,6 @@
 import { User } from '../entities/user.model.js';
 import { UserModel } from './user.mongo.model.js';
-import { UserMongoRepo } from './users.mongo.repo.js';
+import { UserMongoRepo } from './user.mongo.repo.js';
 
 jest.mock('./user.mongo.model.js');
 

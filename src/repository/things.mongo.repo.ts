@@ -5,7 +5,9 @@ import { ThingModel } from './things.mongo.model.js';
 
 export class ThingsMongoRepo implements Repo<knowledge> {
   async query(): Promise<knowledge[]> {
-    const data = await ThingModel.find();
+    const data = await ThingModel.find().populate('owner', {
+      things: 0,
+    });
     if (!data) throw new HTTPError(404, 'Not found', 'id not found');
 
     return data;
@@ -18,7 +20,11 @@ export class ThingsMongoRepo implements Repo<knowledge> {
   }
 
   async create(newThing: Partial<knowledge>): Promise<knowledge> {
-    const data = await ThingModel.create(newThing);
+    const data = await (
+      await ThingModel.create(newThing)
+    ).populate('owner', {
+      things: 0,
+    });
     if (!data) throw new HTTPError(404, 'Not found', 'id not found');
     return data;
   }

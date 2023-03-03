@@ -1,9 +1,9 @@
 import { Router as router } from 'express';
 import { UserControllers } from '../controllers/users.controller.js';
-import { UsersMongoRepo } from '../repository/users.mongo.repo.js';
+import { UserMongoRepo } from '../repository/user.mongo.repo.js';
 
 export const usersRouter = router();
-const repo = new UsersMongoRepo();
+const repo = new UserMongoRepo();
 
 const controllers = new UserControllers(repo);
 

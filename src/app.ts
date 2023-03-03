@@ -25,20 +25,6 @@ app.use((_req, _res, next) => {
 app.use('/things', thingsRouter);
 app.use('/users', usersRouter);
 
-app.get('/', (req, res) => {
-  res.json({ things: '/things' });
-});
-app.get('/:id', (req, res) => {
-  res.send('id' + req.params.id);
-});
-app.post('/', (req, res) => {
-  console.log(req.body);
-  res.send(req.body);
-});
-app.patch('/');
-app.patch('/:id');
-app.delete('/:id');
-
 app.use(
   (error: HTTPError, _req: Request, res: Response, _next: NextFunction) => {
     debug('soy el middleware de errores');
